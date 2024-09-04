@@ -82,6 +82,8 @@ import { POLICIES_QUERY, POLICY_CONTENT_QUERY } from './queries/policies';
 const domain = `https://${process.env.PUBLIC_STORE_DOMAIN!}`;
 const endpoint = `${domain}${SHOPIFY_GRAPHQL_API_ENDPOINT}`;
 const key = process.env.PUBLIC_STOREFRONT_API_TOKEN!;
+console.log(endpoint,"endpoint");
+
 
 type ExtractVariables<T> = T extends { variables: object }
 	? T['variables']
@@ -145,13 +147,14 @@ export async function shopifyFetch<T>({
 	query,
 	variables,
 	headers,
-	cache = 'force-cache',
+	cache = 'no-cache',
 }: {
 	query: string;
 	variables?: ExtractVariables<T>;
 	headers?: HeadersInit;
 	cache?: RequestCache;
 }): Promise<{ status: number; body: T }> {
+	
 	try {
 		const result = await fetch(endpoint, {
 			method: 'POST',
@@ -195,6 +198,7 @@ export async function shopifyFetch<T>({
 }
 
 export async function getLayoutData() {
+	
 	const data = await shopifyFetch<ShopifyLayoutOperation>({
 		query: LAYOUT_QUERY,
 		variables: {
@@ -215,6 +219,9 @@ export async function getAllProducts({
 		endCursor?: string;
 	};
 }) {
+
+	console.log(variables,"variables");
+	
 	const data = await shopifyFetch<{
 		data: {
 			products: ProductConnection;

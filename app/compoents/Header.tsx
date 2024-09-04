@@ -20,6 +20,9 @@ function Header({
 	const pathname = usePathname();
 	const isHome = pathname === '/';
 
+	console.log(menu);
+	
+
 	return (
 		<>
 			<CartDrawer />

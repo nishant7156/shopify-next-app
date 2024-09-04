@@ -22,6 +22,7 @@ function DesktopHeader({
 }) {
 	const searchTerm = useSearchParam('q');
 	const { y } = useWindowScroll();
+	
 	return (
 		<header
 			role="banner"

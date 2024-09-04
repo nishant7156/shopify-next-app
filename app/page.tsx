@@ -29,6 +29,17 @@ export default async function Homepage() {
 	const featuredCollections = await getFeaturedCollections();
 	const tertiaryHero = await getTertiaryHero();
 
+	console.log(primaryHero,"primaryHero");
+	console.log(featuredProducts,"featuredProducts");
+	console.log(secondaryHero,"secondaryHero");
+	console.log(featuredCollections,"featuredCollections");
+	console.log(tertiaryHero,"tertiaryHero");
+	
+	
+	
+	
+	
+
 	return (
 		<>
 			<Head>
