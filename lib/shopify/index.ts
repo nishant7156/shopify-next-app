@@ -425,6 +425,7 @@ export async function getAllPosts({
 		blogHandle: string;
 	};
 }) {
+	
 	const data = await shopifyFetch<{
 		data: {
 			blog: Blog;

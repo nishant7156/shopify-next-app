@@ -47,9 +47,9 @@ export default async function Homepage() {
 					{JSON.stringify(seoStructuredData)}
 				</script>
 			</Head>
-			{primaryHero && (
+			{/* {primaryHero && (
 				<Hero {...primaryHero.body.data.hero} height="full" top />
-			)}
+			)} */}
 
 			{featuredProducts?.body.data.products.nodes && (
 				<ProductSwimlane

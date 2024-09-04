@@ -13,12 +13,15 @@ export default async function JournalPage() {
 		},
 	});
 
+	console.log(data.body.data.blog,"data");
+	
+
 	return (
 		<>
 			<PageHeader heading="Journal" />
 			<Section>
 				<Grid as="ol" layout="blog">
-					{data.body.data.blog.articles.edges.map(article => (
+					{data&&data?.body?.data?.blog?.articles.edges.map(article => (
 						<ArticleCard
 							blogHandle={BLOG_HANDLE.toLowerCase()}
 							article={article.node}
@@ -26,7 +29,7 @@ export default async function JournalPage() {
 						/>
 					))}
 				</Grid>
-				{data.body.data.blog.articles.pageInfo?.hasNextPage && (
+				{data&&data?.body?.data?.blog?.articles.pageInfo?.hasNextPage && (
 					<LoadMorePosts
 						startCursor={data.body.data.blog.articles.pageInfo.endCursor}
 					/>
