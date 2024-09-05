@@ -21,6 +21,7 @@ function Header({
 	const isHome = pathname === '/';
 
 	console.log(menu);
+	
 
 	return (
 		<>

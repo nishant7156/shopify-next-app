@@ -6,10 +6,18 @@ import { useSearchParam, useWindowScroll } from 'react-use';
 import Image from 'next/image';
 import { Input } from '@/components/Input';
 import IconWithText from '@/components/IconWithText';
-import { EarthIcon, Icon } from '@/components';
+import {
+	ArrowDownIcon,
+	EarthIcon,
+	Icon,
+	IconArrow,
+	IconSearch,
+} from '@/components';
 import CartCount from './CartCount';
 import AccountLink from './AccountLink';
 import HeaderBottomBanner from './HeaderBottomBanner';
+import { SetStateAction, useEffect, useRef, useState } from 'react';
+import clsx from 'clsx';
 
 function DesktopHeader({
 	title,
@@ -22,6 +30,27 @@ function DesktopHeader({
 	menu: ShopifyHeaderMenu;
 	isUser: boolean;
 }) {
+	const [activeItem, setActiveItem] = useState<any>(null);
+	const menuRef = useRef(null);
+
+	const handleClick = (id: string | SetStateAction<null>) => {
+		setActiveItem(activeItem === id ? null : id);
+	};
+
+	useEffect(() => {
+		const handleOutsideClick = (event: { target: any }) => {
+			//@ts-ignore
+			if (menuRef.current && !menuRef.current.contains(event.target)) {
+				setActiveItem(null);
+			}
+		};
+
+		document.addEventListener('mousedown', handleOutsideClick);
+		return () => {
+			document.removeEventListener('mousedown', handleOutsideClick);
+		};
+	}, []);
+
 	const searchTerm = useSearchParam('q');
 	const { y } = useWindowScroll();
 
@@ -125,24 +154,78 @@ function DesktopHeader({
 										icon={<Icon direction="down" />}
 									/>
 								</div>
-								<Input type="search" placeholder="How can we help you today?" />
+								<form
+									method="get"
+									action={'/search'}
+									className="flex items-center gap-2 bg-[#D9D9D980]"
+								>
+									<Input
+										defaultValue={searchTerm}
+										className={
+											' border-0 min-w-[310px] w-full placeholder:text-xs placeholder:text-black'
+										}
+										type="search"
+										variant="default"
+										placeholder="How can we help you today?"
+										name="q"
+									/>
+									<button
+										type="submit"
+										className="relative flex items-center justify-center w-8 h-8 focus:ring-primary/5"
+									>
+										<IconSearch />
+									</button>
+								</form>
 							</div>
 						</div>
 						<hr />
 						<div className="sm-container flex justify-between items-center py-2">
-							<nav className="flex gap-8">
+							<nav className="flex gap-8" ref={menuRef}>
 								{menu.items.map(item => {
 									const pathname = new URL(item.url).pathname;
+									const hasSubmenu = item?.items?.length > 0;
+
 									return (
-										<Link
-											key={item.id}
-											href={pathname}
-											className={({ isActive }) =>
-												isActive ? 'pb-1 border-b -mb-px' : 'pb-1'
-											}
-										>
-											{item.title}
-										</Link>
+										<div className="relative" key={item.id}>
+											<div
+												className="flex items-center gap-2 cursor-pointer"
+												onClick={() => handleClick(item.id)}
+											>
+												<button className="focus:outline-none text-base">
+													{hasSubmenu ? (
+														<p className="pb-1"> {item.title}</p>
+													) : (
+														<Link
+															href={pathname}
+															className={clsx('pb-1', 'hover:text-primary')}
+														>
+															{item.title}
+														</Link>
+													)}
+												</button>
+												{hasSubmenu && <ArrowDownIcon />}
+											</div>
+
+											{hasSubmenu && activeItem === item.id && (
+												<div className="absolute left-0 mt-2 bg-white shadow-lg rounded-md py-2 px-8 z-10">
+													<ul className="space-y-2">
+														{item.items.map(subItem => (
+															<li
+																key={subItem.id}
+																className={clsx(
+																	'w-[150px] font-semibold',
+																	'hover:text-primary'
+																)}
+															>
+																<Link href={new URL(subItem.url).pathname}>
+																	{subItem.title}
+																</Link>
+															</li>
+														))}
+													</ul>
+												</div>
+											)}
+										</div>
 									);
 								})}
 							</nav>
