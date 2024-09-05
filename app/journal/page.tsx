@@ -13,7 +13,6 @@ export default async function JournalPage() {
 		},
 	});
 
-	console.log(data.body.data.blog,"data");
 	
 
 	return (

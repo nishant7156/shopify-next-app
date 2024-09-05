@@ -38,6 +38,8 @@ export const ProductCard = ({
 
 	if (!firstVariant) return null;
 	const { image, price, compareAtPrice } = firstVariant;
+	console.log(image);
+	
 
 	if (label) {
 		cardLabel = label;

@@ -83,7 +83,6 @@ import { PAGE_LAYOUT_DATA } from './queries/pages';
 const domain = `https://${process.env.PUBLIC_STORE_DOMAIN!}`;
 const endpoint = `${domain}${SHOPIFY_GRAPHQL_API_ENDPOINT}`;
 const key = process.env.PUBLIC_STOREFRONT_API_TOKEN!;
-console.log(endpoint,"endpoint");
 
 
 type ExtractVariables<T> = T extends { variables: object }
@@ -221,7 +220,6 @@ export async function getAllProducts({
 	};
 }) {
 
-	console.log(variables,"variables");
 	
 	const data = await shopifyFetch<{
 		data: {

@@ -13,7 +13,8 @@ export interface CollectionHero {
 	spread: any;
 	spreadSecondary: any;
 	top?: boolean;
-	title?:string;
+	title?: string;
+	imgSrc?: any;
 }
 
 /**
@@ -28,16 +29,14 @@ export function Hero({
 	spread,
 	spreadSecondary,
 	top,
-	title
+	title,
+	imgSrc,
 }: CollectionHero) {
-	console.log(title);
-	
-	
 	return (
 		<Link href={`/collections/${handle}`}>
 			<section
 				className={clsx(
-					'relative justify-end flex flex-col w-full',
+					'relative justify-center items-start flex flex-col w-full',
 					top && '-mt-nav',
 					height === 'full'
 						? 'h-screen'
@@ -45,15 +44,23 @@ export function Hero({
 				)}
 			>
 				<div className="absolute inset-0 grid flex-grow grid-flow-col pointer-events-none auto-cols-fr -z-10 content-stretch overflow-clip">
-					{spread?.reference && (
+					{imgSrc && (
 						<div>
-							<SpreadMedia
+							{/* <SpreadMedia
 								sizes={
 									spreadSecondary?.reference
 										? '(min-width: 48em) 50vw, 100vw'
 										: '100vw'
 								}
 								data={spread.reference.image}
+							/> */}
+							<Image
+								src={imgSrc}
+								alt={'d'}
+								className="block object-cover w-full h-full"
+								sizes={'(min-width: 48em) 50vw, 100vw'}
+								width={100}
+								height={100}
 							/>
 						</div>
 					)}
@@ -66,19 +73,21 @@ export function Hero({
 						</div>
 					)}
 				</div>
-				<div className="flex flex-col items-baseline justify-between gap-4 px-6 py-8 sm:px-8 md:px-12 bg-gradient-to-t dark:from-contrast/60 dark:text-primary from-primary/60 text-contrast">
-					{heading?.value && (
-						<Heading format as="h2" size="display" className="max-w-md text-white">
-							{title ||heading.value}
-						</Heading>
-					)}
-					{byline?.value && (
-						<Text format width="narrow" as="p" size="lead">
-							{byline.value}
-						</Text>
-					)}
-					{cta?.value && <Text size="lead">{cta.value}</Text>}
+				<div className=" container">
+					<div className=" flex flex-col ">
+						{title && (
+							<Heading
+								format
+								as="h2"
+								size="display"
+								className="max-w-md text-white"
+							>
+								{title || heading.value}
+							</Heading>
+						)}
+					</div>
 				</div>
+				{/* <div className="flex flex-col items-baseline justify-between gap-4 px-6 py-8 sm:px-8 md:px-12 bg-gradient-to-t dark:from-contrast/60 dark:text-primary from-primary/60 text-contrast"></div> */}
 			</section>
 		</Link>
 	);

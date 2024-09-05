@@ -12,6 +12,13 @@ export const PAGE_LAYOUT_DATA = `#graphql
       }
       
       heroImage: metafield(namespace: "custom", key: "hero_image") {
+       reference {
+        ... on MediaImage {
+          image {
+            originalSrc
+          }
+        }
+      }
         value
         type
       }
