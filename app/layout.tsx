@@ -26,8 +26,8 @@ export default async function RootLayout({
 	const data = await getLayoutData();
 	const accessToken = cookies().get('customerAccessToken');
 	return (
-		<html lang="en">
-			<body className={inter.className}>
+		<html lang="en" className="dark">
+			<body className={`${inter.className} dark`}>
 				<ShopifyAnalytics shopId={data.body.data.shop.id} />
 				<div className="flex flex-col min-h-screen">
 					<div className="">

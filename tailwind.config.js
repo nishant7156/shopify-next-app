@@ -21,10 +21,26 @@ module.exports = {
 	theme: {
 		extend: {
 			colors: {
-				primary: withOpacityValue('--color-primary'),
+				// primary: withOpacityValue('--color-primary'),
 				contrast: withOpacityValue('--color-contrast'),
 				notice: withOpacityValue('--color-accent'),
 				shopPay: 'var(--color-shop-pay)',
+				primary: {
+					DEFAULT:'#FF0800',
+					50: '#fdf8f6',
+					100: '#f2e8e5',
+					200: '#eaddd7',
+					300: '#e0cec7',
+					400: '#d2bab0',
+					500: '#bfa094',
+					600: '#a18072',
+					700: '#977669',
+					800: '#846358',
+					900: '#43302b',
+				  },
+				gray:{
+					DEFAULT:"#F3F3F3"
+				},
 			},
 			screens: {
 				sm: '32em',
