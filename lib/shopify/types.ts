@@ -692,6 +692,7 @@ export type ShopifyFeaturedCollectionOperation = {
 
 export type ShopifyHeroOperation = {
 	data: {
+    page: any;
 		hero: CollectionHero;
 	};
 	variables: {

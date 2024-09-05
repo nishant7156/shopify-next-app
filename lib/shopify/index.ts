@@ -78,6 +78,7 @@ import {
 import { CUSTOMER_UPDATE_MUTATION } from './mutations/customer';
 import { CUSTOMER_ORDER_QUERY } from './queries/orders';
 import { POLICIES_QUERY, POLICY_CONTENT_QUERY } from './queries/policies';
+import { PAGE_LAYOUT_DATA } from './queries/pages';
 
 const domain = `https://${process.env.PUBLIC_STORE_DOMAIN!}`;
 const endpoint = `${domain}${SHOPIFY_GRAPHQL_API_ENDPOINT}`;
@@ -300,6 +301,15 @@ export async function getSecondaryHero() {
 export async function getFeaturedCollections() {
 	const data = await shopifyFetch<ShopifyFeaturedCollectionOperation>({
 		query: FEATURED_COLLECTIONS_QUERY,
+	});
+	return data;
+}
+export async function getPageLayoutData(pageName:string) {
+	const data = await shopifyFetch<ShopifyHeroOperation>({
+		query: PAGE_LAYOUT_DATA,
+		variables: {
+			handle: `${pageName}`,
+		},
 	});
 	return data;
 }
